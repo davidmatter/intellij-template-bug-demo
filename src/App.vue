@@ -1,32 +1,24 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view />
+    {{ a }}
+    {{ b.c }}
   </div>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script lang="ts">
+import { computed, defineComponent, ref } from "@vue/composition-api";
 
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>
+export default defineComponent({
+  name: "App",
+  setup() {
+    return {
+      a: ref(3), // works in Template: Ref<UnwrapRef<number>>
+      b: computed(() => { // Doesn't workm in Template: ComputedRef<{c: number}>
+        return {
+          c: 2
+        }
+      })
+    }
+  }
+});
+</script>
